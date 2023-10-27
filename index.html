@@ -24,63 +24,155 @@
 
 <body>
     <div id="trevo">
+        <nav>
+            <form id="cores">
+                <input type="radio" id="tema1" name="tema">
+                <input type="radio" id="tema2" name="tema">
+                <input type="radio" id="tema3" name="tema">
+            </form>
+        </nav>
         <header>
             <h1>Livro de receitas</h1>
-            </header>
-            <ul id="lista">
-                <li>
-                     <div class="item-lista">
-                        <div id="todo-item">
-                                                <h2>Nome da receita</h2>
-                                                <div id="info-item">
-                             
-                                                        <div class="info">
-                                                                <img src="tempo.png" alt="icon">
-                                                                <p>Tempo de preparo</p>
-                                                            </div>
-                             
-                                                        <div class="info">
-                                                                <img src="rend.png" alt="icon">
-                                                                <p>Rendimento</p>
-                                                            </div>
-   
-                        </div>
-                                               
-                                            </div>
-                                    </div>
-                            </li>
-                       
-             
-            </ul>
+        </header>
+<div id="tela">
 
-                <div class="modal" id="modal">
-                    <div class="modal-content">
-                        <header class="modal-n">
-                            <h2>Nova Receita</h2>
-                            <span class="modal-close" id="modalClose">&#10006;</span>
-                        </header>
-                        <form id="form" class="modal-form">
-                            <input type="text" id="Nome" data-index="new" class="modal-info" placeholder="Nome da Receita"
-                            required>
-                            <input type="text" id="Ingredientes" class="modal-info" placeholder="Ingredientes" required>
-                            <input type="text" id="Preparo" class="modal-info" placeholder="Preparo" required>
-                            <input type="text" id="Tempo" class="modal-info" placeholder="Tempo" required>
-                        </form>
-                        <footer class="modal-footer">
-                            <button id="salvar" class="button green">Salvar</button>
-                            <button id="cancelar" class="button blue">Cancelar</button>
-                        </footer>
-                    </div>
-          
+        <div id="create">
+
+            <div class="novo-item">
+                <div id="todo-item-novo">
+                    <h2>Adicionar uma nova receita</h2>
+                </div>
+                <div id="botaonovo">
+
+                    <input type="button" id="cadastrarReceita" value="+">
+
                 </div>
 
-             </ul>
-                <div class="quadrado">
-            lloiiççg
-                   
-                    </div>
-         </div>
+            </div>
+        </div>
+
+        <ul id="lista">
+
+            <li>
+                <div class="item-lista">
+                    <div id="todo-item">
+                        <h2>Nome da receita</h2>
+                        <div id="info-item">
+
+                            <div class="info">
+                                <img src="icones/icon-tempo.png" alt="icon" id="img2">
+                                <p>Tempo de preparo</p>
+                            </div>
+
+                            <div class="info">
+                                <img src="icones/icon-rendimento.png" alt="icon" id="img1">
+                                <p>Rendimento</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item-lista">
+                    <div id="todo-item">
+                        <h2>Nome da receita</h2>
+                        <div id="info-item">
+
+                            <div class="info">
+                                <img src="icones/icon-tempo.png" alt="icon" id="img2">
+                                <p>Tempo de preparo</p>
+                            </div>
+
+                            <div class="info">
+                                <img src="icones/icon-rendimento.png" alt="icon" id="img1">
+                                <p>Rendimento</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+
+
+        </ul>
+</div>
+        <div class="modal1" id="modal1">
+            <ul id="lista1">
+
+                <li>
+                    <div class="item-lista">
+                        <div id="todo-item">
+                            <h2>Nome da receita</h2>
+                            <div id="info-item">
+
+                                <div class="info">
+                                    <img src="icones/icon-tempo.png" alt="icon" id="img2">
+                                    <p>Tempo de preparo</p>
+                                </div>
+
+                                <div class="info">
+                                    <img src="icones/icon-rendimento.png" alt="icon" id="img1">
+                                    <p>Rendimento</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-lista">
+                        <div id="todo-item">
+                            <h2>Nome da receita</h2>
+                            <div id="info-item">
+
+                                <div class="info">
+                                    <img src="icones/icon-tempo.png" alt="icon" id="img2">
+                                    <p>Tempo de preparo</p>
+                                </div>
+
+                                <div class="info">
+                                    <img src="icones/icon-rendimento.png" alt="icon" id="img1">
+                                    <p>Rendimento</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+
+
+            </ul>
+            <div class="modal" id="modal">
+                <div class="modal-content">
+                    <header class="modal-n">
+                        <h2>Nova Receita</h2>
+                        <span class="modal-close" id="modalClose">&#10006;</span>
+                    </header>
+                    <form id="form" class="modal-form">
+                        <input type="text" id="Nome" data-index="new" class="modal-info" placeholder="Nome da Receita"
+                            required>
+                        <input type="text" id="Ingredientes" class="modal-info" placeholder="Ingredientes" required>
+                        <input type="text" id="Preparo" class="modal-info" placeholder="Preparo" required>
+                        <input type="text" id="Tempo" class="modal-info" placeholder="Tempo" required>
+                    </form>
+                    <footer class="modal-footer">
+                        <button id="salvar" class="button green">Salvar</button>
+                        <button id="cancelar" class="button blue">Cancelar</button>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
 </body>
- 
+
 
 </html>

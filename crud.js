@@ -1,9 +1,23 @@
 const openModal = () => document.getElementById('modal')
-    .classList.add('active')
+    .classList.add('active') 
+
+const openModal1 = () => document.getElementById('modal1')
+    .classList.add('active') 
+
 
 const closeModal = () => {
-    clearinfo()
+    clearInfo()
     document.getElementById('modal').classList.remove('active')
+}
+const closeModal1 = () => {
+    clearInfo()
+    document.getElementById('modal1').classList.remove('active')
+}
+
+
+const trocatela = () => document.getElementById('tela').classList.add('disabled') 
+const voltatela = () => {
+    document.getElementById('tela').classList.remove('disabled')
 }
 
 const getLocalstorage = () => JSON.parse(localStorage.getItem('dbrec')) ?? [];
@@ -43,7 +57,7 @@ const isValidFields = () => {
     document.getElementById('form').reportValidity();
 }
 
-const clearinfo = () =>{
+const clearInfo = () =>{
     const info = document.querySelectorAll('.modal-info')
     info.forEach(info => info.value = "" )
 }
@@ -63,11 +77,22 @@ const saveReceita = () =>{
     }
 }
 
-document.getElementById('cadastrarReceita')
-.addEventListener('click', openModal)
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('cadastrarReceita').addEventListener('click', openModal);
+    document.getElementById('cadastrarReceita').addEventListener('click', openModal1);
+    document.getElementById('cadastrarReceita').addEventListener('click', trocatela);
 
-document.getElementById('modalClose')
-.addEventListener('click', closeModal)
 
-document.getElementById('salvar')
-.addEventListener('click', saveReceita)
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('modalClose').addEventListener('click', closeModal1);
+    document.getElementById('modalClose').addEventListener('click', voltatela);
+    document.getElementById('salvar').addEventListener('click', saveReceita);
+});
+
+//document.getElementById('cadastrarReceita').addEventListener('click', openModal);
+
+
+
+
+
+
