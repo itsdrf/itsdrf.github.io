@@ -51,17 +51,28 @@
                             </li>
                        
              
-             </ul>
+            </ul>
 
-             <ul id="form">
-                <form id="form" class="modal-form">
-                    <input type="text" id="nome" data-index="new" class="modal-info" placeholder="Nome da Receita"
-                    required>
-                    <input type="text" id="ingredientes" class="modal-info" placeholder="Ingredientes" required>
-                    <input type="text" id="Preparo" class="modal-info" placeholder="Preparo" required>
-                    <input type="text" id="Tempo" class="modal-info" placeholder="Tempo" required>
-                
-                 </form>
+                <div class="modal" id="modal">
+                    <div class="modal-content">
+                        <header class="modal-n">
+                            <h2>Nova Receita</h2>
+                            <span class="modal-close" id="modalClose">&#10006;</span>
+                        </header>
+                        <form id="form" class="modal-form">
+                            <input type="text" id="Nome" data-index="new" class="modal-info" placeholder="Nome da Receita"
+                            required>
+                            <input type="text" id="Ingredientes" class="modal-info" placeholder="Ingredientes" required>
+                            <input type="text" id="Preparo" class="modal-info" placeholder="Preparo" required>
+                            <input type="text" id="Tempo" class="modal-info" placeholder="Tempo" required>
+                        </form>
+                        <footer class="modal-footer">
+                            <button id="salvar" class="button green">Salvar</button>
+                            <button id="cancelar" class="button blue">Cancelar</button>
+                        </footer>
+                    </div>
+          
+                </div>
 
              </ul>
                 <div class="quadrado">
