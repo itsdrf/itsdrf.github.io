@@ -1,26 +1,34 @@
-const getLocalstorage = () => JSON.parse(localStorage.getItem('db_receita')) ?? [];
-const setLocalstorage = (dbrec) => localStorage.setItem("db_receita", JSON.stringify(dbrec))
+const getLocalstorage = () => JSON.parse(localStorage.getItem('dbrec')) ?? [];
+const setLocalstorage = (dbrec) => localStorage.setItem("dbrec", JSON.stringify(dbrec))
 
 const tempreceita = {
-    nome: "bolo",
+    nome: "arroz",
     ingredientes: "ovo",
     preparo: "bater ovos",
     tempo: 15
 }
 
-//CREATE
+//read
+const readReceita = () => getLocalstorage()
 
+//CREATE
 const createReceita = (receita) => {
-    const db_rec = getLocalstorage()
+    const dbrec = getLocalstorage()
     dbrec.push(receita)
-    setLocalStorage(dbrec)
+    setLocalstorage(dbrec)
+}
+
+//update
+const updateReceita = (index, receita) =>{
+    const dbrec = readReceita ()
+    dbrec[index] = receita
+    setLocalstorage(dbrec)
 }
 
 //delete
-const deleteReceita = (index) => {
-    const dbrec = readrec()
-    dbrec.splice
+const deleteReceita = (index) =>{
+    const dbrec = readReceita()
+    dbrec.splice(index,1)
+    setLocalstorage(dbrec)
 }
 
-// Evento
-document.getElementById('cadastrarRec').addEventListener('click',)
