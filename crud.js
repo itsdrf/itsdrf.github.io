@@ -70,12 +70,79 @@ const saveReceita = () =>{
             Preparo: document.getElementById('Preparo').value,
             Tempo: document.getElementById('Tempo').value,
         }
-        createReceita(receita)
-        clearinfo()
-        closeModal  ()
-        console.log ("Criando nova receita")
+        const index = document.getElementById('nome').dataset.index
+        if (index == 'new') {
+            createReceita(receita)
+            updateTable()
+            closeModal()
+        } else {
+            updateReceita(index, receita)
+            updateTable()
+            closeModal()
+        } 
+        }
     }
-}
+
+    const createRow = (receita, index) => {
+        const newRow = document.createElement('tr')
+        newRow.innerHTML = `
+            <td>${receita.nome}</td>
+            <td>${receita.ingredientes}</td>
+            <td>${receita.preparo}</td>
+            <td>${receita.tempo}</td>
+            <td>
+                <button type="button" class="button green" id="edit-${index}">Editar</button>
+                <button type="button" class="button red" id="delete-${index}" >Excluir</button>
+            </td>
+        `
+        document.querySelector('#tableClient>tbody').appendChild(newRow)
+    }
+    
+    const clearTable = () => {
+        const rows = document.querySelectorAll('#tableClient>tbody tr')
+        rows.forEach(row => row.parentNode.removeChild(row))
+    }
+    
+    const updateTable = () => {
+        const dbrec = readReceita()
+        clearTable()
+        dbrec.forEach(createRow)
+    }
+    
+    const fillFields = (receita) => {
+        document.getElementById('nome').value = receita.nome
+        document.getElementById('ingredientes').value = receita.ingredientes
+        document.getElementById('preparo').value = receita.preparo
+        document.getElementById('tempo').value = receita.tempo
+         }
+    
+    const editReceita = (index) => {
+        const receita = readReceita()[index]
+        receita.index = index
+        fillFields(receita)
+        document.querySelector(".modal-n>h2").textContent  = `Editando ${receita.nome}`
+        openModal()
+    }
+    
+    const editDelete = (event) => {
+        if (event.target.type == 'button') {
+    
+            const [action, index] = event.target.id.split('-')
+    
+            if (action == 'edit') {
+                editReceita(index)
+            } else {
+                const receita = readReceita()[index]
+                const response = confirm(`Deseja realmente excluir o cliente ${client.nome}`)
+                if (response) {
+                    deleteReceita(index)
+                    updateTable()
+                }
+            }
+        }
+    }
+    
+    updateTable()
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('cadastrarReceita').addEventListener('click', openModal);
