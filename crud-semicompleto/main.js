@@ -129,6 +129,19 @@ const savereceita = () => {
   }
 };
 
+
+const anima = () =>{
+    const lista = document.getElementById("lista")
+    lista.style.setProperty('-webkit-animation', "slide-in-right .8s .3s both")
+    lista.style.setProperty('animation', "slide-in-right .8s .3s both")
+
+
+    const modal = document.getElementById('modal')
+    modal.style.setProperty('-webkit-animation', 'slide-in-elliptic-left-fwd .8s cubic-bezier(.25,.46,.45,.94) .3s both')
+    modal.style.setProperty('animation', 'slide-in-elliptic-left-fwd .8s cubic-bezier(.25,.46,.45,.94) .3s both')
+}
+
+
 const editreceita = () => {
   const index = document.getElementById("edit-btn").className;
   const receita = readreceita()[index];
@@ -201,6 +214,7 @@ const troca = () => {
 
 const openModal = () => {
   closeView();
+  anima()
   const modal = document.getElementById("modal");
   modal.classList.add("active");
 };
