@@ -1,43 +1,43 @@
+const getLocalStorage = () =>
+  JSON.parse(localStorage.getItem("db_receita")) ?? [];
 
-
-const getLocalStorage = () => JSON.parse(localStorage.getItem('db_receita')) ?? []
-
-const setLocalStorage = (db_receita) => localStorage.setItem("db_receita", JSON.stringify(db_receita))
-
-
-
+const setLocalStorage = (db_receita) =>
+  localStorage.setItem("db_receita", JSON.stringify(db_receita));
 
 const IsValidFields = () => {
-    return document.getElementById("myform").reportValidity()
-}
+  return document.getElementById("myform").reportValidity();
+};
 
 const clearFields = () => {
-    const fields = document.querySelectorAll(".book-field")
-    fields.forEach(field => field.value = '')
-    
-}
-
+  const fields = document.querySelectorAll(".book-field");
+  fields.forEach((field) => (field.value = ""))
+  
+  const modal = document.getElementById("modal");
+  modal.classList.remove("active");
+};
 
 const clear_li = () => {
-    const itens = document.querySelectorAll("#receita-lista")
-    itens.forEach(row => row.parentNode.removeChild(row))
-}
+  const itens = document.querySelectorAll("#receita-lista");
+  itens.forEach((row) => row.parentNode.removeChild(row));
+};
 
 const update_li = () => {
-    const db_receita = readreceita();
-    clear_li();
-    db_receita.forEach(createrow)
-    vazio()
+  const db_receita = readreceita();
+  clear_li();
+  db_receita.forEach(createrow);
+  vazio();
+};
 
-}
+
+let modo = "create"
 
 //---------------------------------------
 
 
 const createrow = (receita, index) => {
-    const newrow = document.createElement('li')
-    newrow.id = 'receita-lista';
-    newrow.innerHTML = `
+  const newrow = document.createElement("li");
+  newrow.id = "receita-lista";
+  newrow.innerHTML = `
     <div id='open-${index}' class='pai'>
     <header>
     
@@ -56,193 +56,187 @@ const createrow = (receita, index) => {
         </div>
         </div>
 
-    `
+    `;
 
-    document.getElementById('lista').appendChild(newrow)
-
-
-}
-
+  document.getElementById("lista").appendChild(newrow);
+};
 
 const vazio = () => {
-    const receitas = getLocalStorage().length
+  const receitas = getLocalStorage().length;
 
-
-    if (receitas >= 1) {
-        document.getElementById('vazio').classList.add('false')
-
-    }
-}
-
+  if (receitas >= 1) {
+    document.getElementById("vazio").classList.add("false");
+  } else {
+    document.getElementById("vazio").classList.remove("false");
+  }
+};
 
 //create
 const createreceita = (receita) => {
-    const db_receita = getLocalStorage()
-    db_receita.push(receita)
-    setLocalStorage(db_receita)
-
-}
+  const db_receita = getLocalStorage();
+  db_receita.push(receita);
+  
+  setLocalStorage(db_receita);
+};
 
 //read
 const readreceita = () => getLocalStorage();
 
-
 //update
 const updatereceita = (index, receita) => {
-    const db_receita = readreceita()
-    db_receita[index] = receita
-    setLocalStorage(db_receita)
-}
-
+  const db_receita = readreceita();
+  db_receita[index] = receita;
+  setLocalStorage(db_receita);
+};
 
 //delete
 const deletereceita = (index) => {
-    const db_receita = readreceita()
-    db_receita.splice(index, 1)
-    setLocalStorage(db_receita)
-}
+  const db_receita = readreceita();
+  db_receita.splice(index, 1);
+  setLocalStorage(db_receita);
+  update_li();
+  closeView();
+};
 
 const savereceita = () => {
-    if (IsValidFields()) {
-        const receita = {
-            nome: document.getElementById('nome').value,
-            tempo: document.getElementById('tempo').value,
-            rendimento: document.getElementById('rendimento').value,
-            ingredientes: document.getElementById('ingredientes').value,
-            preparo: document.getElementById('preparo').value,
-        }
-        createreceita(receita)
-        console.log('Cadastrando')
-        clearFields()
-        update_li()
+  if (IsValidFields()) {
+    const receita = {
+      nome: document.getElementById("nome").value,
+      tempo: document.getElementById("tempo").value,
+      rendimento: document.getElementById("rendimento").value,
+      ingredientes: document.getElementById("ingredientes").value,
+      preparo: document.getElementById("preparo").value
+    };
 
-    } else {
-        console.log("erro")
+    const index = document.getElementById('nome').dataset.index
+    console.log(index)
+
+    if (modo === "create"){
+        createreceita(receita);
+        console.log("Cadastrando");
+        clearFields();
+        update_li();
+        closeModal();
     }
-}
+    if (modo === "edit"){
+        updatereceita(index, receita)
+        clearFields();
+        update_li();
+        closeModal();
+    }
 
+    modo = 'create'
+  }
+};
 
+const editreceita = () => {
+  const index = document.getElementById("edit-btn").className;
+  const receita = readreceita()[index];
+  receita.index = index;
+  modo = 'edit'
+  fillfields(receita);
+  openModal();
+};
 
-const editreceita = (index) => {
-    const receita = readreceita()[index]
-    receita.index = index
-    fillfields(receita)
-    openModal();
-}
-
-const openreceita = (index) =>{
-    const receita = readreceita()[index]
-    receita.index = index
-    filltext(receita)
-    openView()
-} 
-
-
-
+const openreceita = (index) => {
+  const receita = readreceita()[index];
+  receita.index = index;
+  filltext(receita);
+  openView();
+};
 
 const opentela = (event) => {
-    const child = (event.target)
-    console.log(child)
-    const pai = child.closest('.pai')
-    const [action, index] = pai.id.split('-')
-    
-    if (action === 'open') {
-        const receita = readreceita()[index];
-        console.log(index)
-        console.log(action)
-        const view = document.getElementById('view2')
-        view.scrollTop = 0;
-        openreceita(index)
-    }
-    
-}
+  const child = event.target;
+  console.log(child);
+  const pai = child.closest(".pai");
+  const [action, index] = pai.id.split("-");
 
-const ler = (event) =>{
-
-} 
-
-
-
+  const receita = readreceita()[index];
+  console.log(index);
+  console.log(action);
+  const view = document.getElementById("view2");
+  view.scrollTop = 0;
+  openreceita(index);
+};
 
 const fillfields = (receita) => {
-    document.getElementById('nome').value = receita.nome
-    document.getElementById('tempo').value = receita.tempo
-    document.getElementById('rendimento').value = receita.rendimento
-    document.getElementById('ingredientes').value = receita.ingredientes
-    document.getElementById('preparo').value = receita.preparo
-    document.getElementById('nome').dataset.index = receita.index
-}
+  document.getElementById("nome").value = receita.nome;
+  document.getElementById("tempo").value = receita.tempo;
+  document.getElementById("rendimento").value = receita.rendimento;
+  document.getElementById("ingredientes").value = receita.ingredientes;
+  document.getElementById("preparo").value = receita.preparo;
+  document.getElementById("nome").dataset.index = receita.index;
+};
+
 const filltext = (receita) => {
-    document.querySelector('#view #nome').innerText = receita.nome
-    document.querySelector('#view #tempo').innerText = receita.tempo
-    document.querySelector('#view #rend').innerText = receita.rendimento
-    document.querySelector('#view #ingred').innerText = receita.ingredientes
-    document.querySelector('#view #preparo').innerText = receita.preparo
-}
+  document.querySelector("#view #nome").innerText = receita.nome;
+  document.querySelector("#view #tempo").innerText = receita.tempo;
+  document.querySelector("#view #rend").innerText = receita.rendimento;
+  document.querySelector("#view #ingred").innerText = receita.ingredientes;
+  document.querySelector("#view #preparo").innerText = receita.preparo;
+  document.querySelector("#edit-btn").setAttribute("class", receita.index);
+};
 
 const listaMax = () => {
-    const receitas = document.getElementById('lista').children
-    const itens = receitas.length
-    
-    if (itens > 4) {
-        const lastitem = receitas[itens - 1]
-        lastitem.classList.add('last')
-    }
-}
+  const receitas = document.getElementById("lista").children;
+  const itens = receitas.length;
 
+  if (itens > 4) {
+    const lastitem = receitas[itens - 1];
+    lastitem.classList.add("last");
+  }
+};
 
 const troca = () => {
-    const input = document.querySelectorAll('.book-field')
+  const input = document.querySelectorAll(".book-field");
 
-    for (var i = 0; i < 5; i++) {
-        input[i].setAttribute('disabled', '')
+  for (var i = 0; i < 5; i++) {
+    input[i].setAttribute("disabled", "");
+  }
 
-    }
+  //document.querySelectorAll(".book-field").
 
-    //document.querySelectorAll(".book-field").
-
-    //input.classList.add('disabled')
-
-}
+  //input.classList.add('disabled')
+};
 
 const openModal = () => {
-    closeView()
-    const modal = document.getElementById('modal')
-    modal.classList.add('active')
-}
+  closeView();
+  const modal = document.getElementById("modal");
+  modal.classList.add("active");
+};
 const closeModal = () => {
-    const modal = document.getElementById('modal')
-    modal.classList.remove('active')
-    clearFields()
-}
+  const modal = document.getElementById("modal");
+  modal.classList.remove("active");
+  clearFields();
+};
 const openView = () => {
-    const open = document.getElementById('view')
-    open.classList.add('active')
-    closeModal()
-    
-}
+  closeModal();
+  const open = document.getElementById("view");
+  open.classList.add("active");
+};
 const closeView = () => {
-    const view = document.getElementById('view')
-    view.classList.remove('active')
-}
-
+  const view = document.getElementById("view");
+  view.classList.remove("active");
+};
 
 //ações
 
-
 update_li();
-
 vazio();
 listaMax();
 
+document.getElementById("salvar").addEventListener("click", savereceita);
 
-document.getElementById('salvar').addEventListener('click', savereceita);
+document.getElementById("cancelar").addEventListener("click", clearFields);
 
-document.getElementById('cancelar').addEventListener('click', clearFields);
+document.getElementById("lista").addEventListener("click", opentela);
 
+document.getElementById("btn-create").addEventListener("click", openModal);
 
-document.getElementById('lista').addEventListener('click', opentela);
+document.getElementById("edit-btn").addEventListener("click", editreceita);
 
-document.getElementById('btn-create').addEventListener('click', openModal);
-document.getElementById('x').addEventListener('click', closeModal);
-document.getElementById('x2').addEventListener('click', closeView);
+document.getElementById("delete-btn").addEventListener("click", deletereceita);
+
+document.getElementById("x").addEventListener("click", closeModal);
+
+document.getElementById("x2").addEventListener("click", closeView);
